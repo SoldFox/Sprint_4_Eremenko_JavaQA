@@ -3,8 +3,6 @@ package PageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OrderPageScooter {
     private WebDriver driver;
@@ -92,8 +90,6 @@ public class OrderPageScooter {
     // Тапаем по кнопке Далее
     public void tapToFirstButtonNext () {
         driver.findElement(firstButtonNext).click();
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.elementToBeClickable(dateWhenToBring));
     }
 
     // Объединяем все методы для первой страницы ввода значений вместе с тапом по кнопке в 1 метод
@@ -146,18 +142,12 @@ public class OrderPageScooter {
 
     // Тапаем по кнопке ДА
     public void tapToButtonYes () {
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.elementToBeClickable(buttonYes));
         driver.findElement(buttonYes).click();
     }
 
     // Проверяем что появилось окна подтверждения заказа
     public boolean waitForWindowOrderCompleted () {
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(windowOrderCompleted));
         return driver.findElement(windowOrderCompleted).getText().contains("Заказ оформлен");
     }
 }
-
-
 

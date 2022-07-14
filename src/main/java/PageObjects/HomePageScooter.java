@@ -3,8 +3,6 @@ package PageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePageScooter {
     private WebDriver driver;
@@ -52,17 +50,9 @@ public class HomePageScooter {
     //Нижняя кнопка заказать (большая)
     private final By orderButtonBig = By.xpath( ".//div[@class = 'Home_FinishButton__1_cWm']/button");
 
-    // Ожидание загрузки страницы
-    public void waitToLoadPage () {
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.elementToBeClickable(LOCATORS_QUESTIONS[0]));
-    }
-
     // Скрол к указанному вопросу из столбца "Вопросы о важном" с ожиданием до полного его отображения
     public void scrollToAccordionButtons (int locator) {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(LOCATORS_QUESTIONS[locator]));
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(LOCATORS_QUESTIONS[locator]));
     }
 
     // Клик по раскрывабщей кнопке из столбца "Вопросы о важном"
@@ -84,8 +74,6 @@ public class HomePageScooter {
     // Скрол к нижней кнопке "Заказать" (большой)
     public void scrollToBigButton () {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(orderButtonBig));
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(orderButtonBig));
     }
 
     // Клик на верхнюю кнопку "Заказать" (маленькую)

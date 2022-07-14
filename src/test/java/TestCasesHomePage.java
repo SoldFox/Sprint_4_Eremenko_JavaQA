@@ -6,16 +6,17 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.concurrent.TimeUnit;
 import static PageObjects.HomePageScooter.URL_YANDEX;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class TestCases_HomePage {
+public class TestCasesHomePage {
 
     private WebDriver driver;
     private final int number;
 
-    public TestCases_HomePage (int number) {
+    public TestCasesHomePage(int number) {
         this.number = number;
     }
 
@@ -32,6 +33,7 @@ public class TestCases_HomePage {
     public void testSetup() {
         System.setProperty("webdriver.chrome.driver" ,  "E:/programs/WebDriver/bin/chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(URL_YANDEX);
     }
 
@@ -39,7 +41,6 @@ public class TestCases_HomePage {
     public void testAccordionButton() {
         HomePageScooter objHomePage = new HomePageScooter(driver);
 
-        objHomePage.waitToLoadPage();
         objHomePage.scrollAndClickToAccordionButton(number);
 
         assertEquals("Text not found or doesn't match",objHomePage.ANSWERS[number], objHomePage.getAccordionButtonsText(number));

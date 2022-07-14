@@ -7,11 +7,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.concurrent.TimeUnit;
 import static PageObjects.HomePageScooter.URL_YANDEX;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class TestCases_OrderPage_SmallButton {
+public class TestCasesOrderPageBigButton {
+
     private WebDriver driver;
 
     private final String FNAME;
@@ -23,7 +25,7 @@ public class TestCases_OrderPage_SmallButton {
     private final String TIME;
     private final String COMM;
 
-    public TestCases_OrderPage_SmallButton(String fname, String sname, String addr, String metro, String number, String date, String time, String comm) {
+    public TestCasesOrderPageBigButton(String fname, String sname, String addr, String metro, String number, String date, String time, String comm) {
         this.FNAME = fname;
         SNAME = sname;
         ADDR = addr;
@@ -37,8 +39,8 @@ public class TestCases_OrderPage_SmallButton {
     @Parameterized.Parameters
     public static Object[][] getNumber () {
         return new Object[][] {
-                {"Валентина", "Воробушкина", "ул. Индюкова д.25", "Черкизовская", "88005553535","16.07.2022", "сутки", "Приветы проверяющим =)"},
-                {"Георгий", "Пензенский", "ул. Паково д.2", "Лубянка", "880055535350","12.07.2022", "трое суток", ""}
+                {"Ирина", "Плохая", "ул. Вашего д.25 кв.5", "Сокольники", "88005553535","16.07.2022", "сутки", "Приветы проверяющим =)"},
+                {"Георгий", "Пензенский", "ул. Паково д.2", "Спортивная", "880055535350","12.07.2022", "двое суток", ""}
         };
     }
 
@@ -46,6 +48,7 @@ public class TestCases_OrderPage_SmallButton {
     public void testSetup() {
         System.setProperty("webdriver.chrome.driver" ,  "E:/programs/WebDriver/bin/chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get(URL_YANDEX);
     }
 
@@ -58,10 +61,12 @@ public class TestCases_OrderPage_SmallButton {
     public void testOrderWithSmallButton() {
 
         HomePageScooter objHomePage = new HomePageScooter(driver);
-        objHomePage.clickToOrderButtonSmall();
+        objHomePage.scrollToBigButton();
+        objHomePage.clickToOrderButtonBig();
 
         OrderPageScooter objOrderPage = new OrderPageScooter(driver);
         objOrderPage.orderPageFirstInput(FNAME,SNAME,ADDR,METRO,NUMBER);
+        objOrderPage.tapOnBlackCheckBox();
         objOrderPage.orderPageSecondInput(DATE,TIME,COMM);
         objOrderPage.tapToButtonYes();
 
